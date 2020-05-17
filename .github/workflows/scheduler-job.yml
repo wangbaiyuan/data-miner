@@ -1,0 +1,51 @@
+name: Scheduled Job
+
+on:
+  schedule:
+    - cron: 0 18 * * *
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 11.15.0
+      - name: Get yarn cache dir
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Use yarn Cache
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Collecting Dynamic Data
+        run: ./dataCollector/collect-dynamic-data.sh
+        env:
+          WP_TOKEN: ${{ secrets.WP_TOKEN }}
+          WP_COMMENTS_API_URL: ${{ secrets.WP_COMMENTS_API_URL }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAGE_TOKEN }}
+      - name: Uploading Dynamic Data
+        uses: saltbo/uptoc@v1.2.8
+        with:
+          driver: qiniu
+          endpoint: huadong
+          bucket: hexo-blog-dynamic-data
+          dist: source/_data
+        env:
+          UPTOC_UPLOADER_AK: ${{ secrets.QINIU_KEYID }}
+          UPTOC_UPLOADER_SK: ${{ secrets.QINIU_KEYSECRET }}
