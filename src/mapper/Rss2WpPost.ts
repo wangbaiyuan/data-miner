@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+import moment from 'moment';
 
 export interface Post {
   title?: string;
@@ -11,6 +12,10 @@ export interface Post {
   icon?: string;
 }
 
+export const convertDate = (dateString: string): string => {
+  return moment(new Date(dateString).getTime()).format();
+};
+
 export const toPost = (rssItem: Parser.Item): Post => {
   return ({
     title: rssItem.title,
@@ -18,7 +23,7 @@ export const toPost = (rssItem: Parser.Item): Post => {
     link: rssItem.link,
     excerpt: rssItem.contentSnippet,
     content: rssItem.content,
-    date: rssItem.pubDate,
+    date: convertDate(rssItem.pubDate!),
     categories: rssItem.categories,
   });
 };
