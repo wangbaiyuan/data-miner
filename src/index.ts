@@ -12,7 +12,8 @@ const urls = [
 
 
 const getContent = (url: string) => getFeeds(url).then(content => {
-  return content.items!.splice(0, 5)
+  const items = content.items!;
+  return items.slice(0, Math.min(items.length, 5))
     .map(toPost)
     .map((post) => mergeRootInfoToPost(post, content));
 }).catch(error => {
@@ -29,6 +30,7 @@ const getContent = (url: string) => getFeeds(url).then(content => {
       }, [])!
       .sort((p1: Post, p2: Post) => (moment(p2.date).toDate().getTime() - moment(p1.date).toDate().getTime()))
   ).then(posts => {
+    console.info('Posts count:', posts.length)
     save(JSON.stringify(posts), `news.json`);
   })
 })();
