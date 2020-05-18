@@ -34,18 +34,18 @@ jobs:
         run: yarn install
 
       - name: Collecting Dynamic Data
-        run: ./dataCollector/collect-dynamic-data.sh
+        run: ./scripts/collect-dynamic-data.sh
         env:
           WP_TOKEN: ${{ secrets.WP_TOKEN }}
           WP_COMMENTS_API_URL: ${{ secrets.WP_COMMENTS_API_URL }}
           GITHUB_TOKEN: ${{ secrets.GH_PAGE_TOKEN }}
       - name: Uploading Dynamic Data
-        uses: saltbo/uptoc@v1.2.8
+        uses: saltbo/uptoc@v1.3.0
         with:
           driver: qiniu
-          endpoint: huadong
+          region: cn-east-1
           bucket: hexo-blog-dynamic-data
-          dist: source/_data
+          dist: _data
         env:
           UPTOC_UPLOADER_AK: ${{ secrets.QINIU_KEYID }}
           UPTOC_UPLOADER_SK: ${{ secrets.QINIU_KEYSECRET }}
