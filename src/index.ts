@@ -12,7 +12,7 @@ const urls = [
 
 
 const getContent = (url: string) => getFeeds(url).then(content => {
-  return content.items!.splice(0, 10)
+  return content.items!.splice(0, 5)
     .map(toPost)
     .map((post) => mergeRootInfoToPost(post, content));
 }).catch(error => {
