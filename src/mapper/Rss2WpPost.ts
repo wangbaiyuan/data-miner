@@ -22,7 +22,7 @@ export const toPost = (rssItem: Parser.Item): Post => {
     author: rssItem.creator,
     link: rssItem.link,
     excerpt: rssItem.contentSnippet,
-    content: rssItem.content,
+    content: rssItem.content || rssItem['content:encoded'],
     date: convertDate(rssItem.pubDate!),
     categories: rssItem.categories,
   });
@@ -31,7 +31,7 @@ export const toPost = (rssItem: Parser.Item): Post => {
 export const mergeRootInfoToPost = (post: any, content: Parser.Output): Post => (
   {
     ...post,
-    author: content.title,
+    author: content.author || content.title,
     icon: content.image && content.image.url
   }
 );
