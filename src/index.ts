@@ -6,8 +6,9 @@ import {mergeRootInfoToPost, Post, toPost} from './mapper/Rss2WpPost';
 
 const urls = [
   'https://martinfowler.com/feed.atom',
-  'https://rss.huxiu.com',
   'https://36kr.com/feed',
+  'https://medium.com/feed/@thoughtworks',
+  'https://medium.com/feed/@googledevs',
 ];
 
 
