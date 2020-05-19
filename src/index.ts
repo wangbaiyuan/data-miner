@@ -7,14 +7,13 @@ import {mergeRootInfoToPost, Post, toPost} from './mapper/Rss2WpPost';
 const urls = [
   'https://martinfowler.com/feed.atom',
   'https://36kr.com/feed',
-  'https://medium.com/feed/@thoughtworks',
   'https://medium.com/feed/@googledevs',
 ];
 
 
 const getContent = (url: string) => getFeeds(url).then(content => {
   const items = content.items!;
-  return items.slice(0, Math.min(items.length, 5))
+  return items.slice(0, Math.min(items.length, 3))
     .map(toPost)
     .map((post) => mergeRootInfoToPost(post, content));
 }).catch(error => {
