@@ -31,7 +31,7 @@ export const toPost = (rssItem: Parser.Item): Post => {
 export const mergeRootInfoToPost = (post: any, content: Parser.Output): Post => (
   {
     ...post,
-    author: content.author || content.title,
+    author: post.author || content.title,
     icon: content.image && content.image.url
   }
 );

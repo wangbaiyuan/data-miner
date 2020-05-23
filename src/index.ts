@@ -8,6 +8,9 @@ const urls = [
   'https://martinfowler.com/feed.atom',
   'https://36kr.com/feed',
   'https://medium.com/feed/@googledevs',
+  'https://thenewstack.io/blog/feed/',
+  'https://medium.com/feed/cloud-native-the-gathering',
+  'https://medium.com/feed/better-programming',
 ];
 
 
