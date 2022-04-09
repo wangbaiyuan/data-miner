@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "graphql-request": "^1.8.2",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "rss-parser": "^3.8.0"
   }
 }
